@@ -7,7 +7,7 @@ branding:
 runs:
   using: "composite"
   steps:
-    - name: Show disk space before clean
+    - name: Before clean
       shell: bash
       run: df -h
 
@@ -15,11 +15,11 @@ runs:
       shell: bash
       run: |
         # remove unnecessary software
-        sudo find /usr/local/lib/android -mindepth 1 -delete
+        #sudo find /usr/local/lib/android -mindepth 1 -delete
+        sudo find /usr/local -mindepth 1 -delete
         sudo find /usr/lib/google-cloud-sdk -mindepth 1 -delete
         sudo find /usr/share/dotnet -mindepth 1 -delete
         sudo find /usr/share/swift -mindepth 1 -delete
-        sudo find /usr/local -mindepth 1 -delete
         sudo find /opt/az -mindepth 1 -delete
         sudo find /opt/google -mindepth 1 -delete
         sudo find /opt/microsoft -mindepth 1 -delete
@@ -32,11 +32,11 @@ runs:
           local arch="x86_64"
           [ "$(dpkg --print-architecture)" = "amd64" ] || arch="aarch64"
           curl https://download.docker.com/linux/static/stable/${arch}/docker-${docker_version}.tgz | \
-            sudo tar zxv -C /usr/local/bin/ docker/docker --strip-components 1
+            sudo tar zxv -C /usr/bin/ docker/docker --strip-components 1
         }
         download_docker_binary
         sudo docker image prune -af
 
-    - name: Show disk space after clean
+    - name: After clean
       shell: bash
       run: df -h
