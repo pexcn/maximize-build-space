@@ -3,6 +3,11 @@ description: 'Maximize the disk space of GitHub Actions.'
 branding:
   icon: 'meh'
   color: 'blue'
+inputs:
+  use-system-docker:
+    description: 'Use the system built-in docker to clean the images.'
+    required: false
+    default: true
 
 runs:
   using: "composite"
@@ -34,7 +39,7 @@ runs:
           curl https://download.docker.com/linux/static/stable/${arch}/docker-${docker_version}.tgz | \
             sudo tar zxv -C /usr/bin/ docker/docker --strip-components 1
         }
-        download_docker_binary
+        [ "${{ inputs.use-system-docker }}" = "true" ] || download_docker_binary
         sudo docker image prune -af
 
     - name: After clean

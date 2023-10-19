@@ -45,3 +45,5 @@ jobs:
 
       - name: Test actions
         uses: ./src
+        with:
+          use-system-docker: false
