@@ -1,0 +1,36 @@
+name: 'Maximize build space'
+description: 'Maximize the disk space of GitHub Actions.'
+branding:
+  icon: 'meh'
+  color: 'blue'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Show disk space before cleaning
+      shell: bash
+      run: df -h
+
+    - name: Maximize disk space
+      shell: bash
+      run: |
+        # remove unnecessary software
+        sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /opt/ghc
+        sudo rm -rf /opt/hostedtoolcache/CodeQL
+
+        # remove docker images
+        download_docker_binary() {
+          local docker_version="24.0.6"
+          local arch="x86_64"
+          [ "$(dpkg --print-architecture)" = "amd64" ] || arch="aarch64"
+          curl https://download.docker.com/linux/static/stable/${arch}/docker-${docker_version}.tgz | \
+            sudo tar zxv -C /usr/local/bin/ docker/docker --strip-components 1
+        }
+        download_docker_binary
+        sudo docker image prune -af
+
+    - name: Show disk space after cleaning
+      shell: bash
+      run: df -h
