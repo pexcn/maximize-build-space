@@ -1,4 +1,4 @@
-name: 'Maximize build space'
+name: 'Maximize disk space'
 description: 'Maximize the disk space of GitHub Actions.'
 branding:
   icon: 'meh'
@@ -15,8 +15,8 @@ runs:
       shell: bash
       run: |
         # remove unnecessary software
-        sudo find /usr/lib/google-cloud-sdk -mindepth 1 -delete
         sudo find /usr/local/lib/android -mindepth 1 -delete
+        sudo find /usr/lib/google-cloud-sdk -mindepth 1 -delete
         sudo find /usr/share/dotnet -mindepth 1 -delete
         sudo find /usr/share/swift -mindepth 1 -delete
         sudo find /usr/local -mindepth 1 -delete

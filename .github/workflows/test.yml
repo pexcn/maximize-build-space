@@ -1,0 +1,47 @@
+name: Test
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    env:
+      TZ: Asia/Taipei
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          path: ./src
+
+      - name: Test
+        uses: ./src
+
+  test-docker:
+    runs-on: ubuntu-22.04
+    env:
+      TZ: Asia/Taipei
+    container:
+      image: pexcn/docker-images:bookworm
+      volumes:
+        - /usr/local/lib/android:/usr/local/lib/android
+        - /usr/lib/google-cloud-sdk:/usr/lib/google-cloud-sdk
+        - /usr/share/dotnet:/usr/share/dotnet
+        - /usr/share/swift:/usr/share/swift
+        - /usr/local:/usr/local
+        - /opt/az:/opt/az
+        - /opt/google:/opt/google
+        - /opt/microsoft:/opt/microsoft
+        - /opt/pipx:/opt/pipx
+        - /opt/hostedtoolcache:/opt/hostedtoolcache
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          path: ./src
+
+      - name: Test
+        uses: ./src
