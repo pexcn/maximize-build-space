@@ -19,7 +19,7 @@ runs:
         sudo find /usr/lib/google-cloud-sdk -mindepth 1 -delete
         sudo find /usr/share/dotnet -mindepth 1 -delete
         sudo find /usr/share/swift -mindepth 1 -delete
-        sudo find /usr/local -mindepth 1 -delete
+        sudo find /usr/local -mindepth 1 -not -path "/usr/local/bin*" -delete
         sudo find /opt/az -mindepth 1 -delete
         sudo find /opt/google -mindepth 1 -delete
         sudo find /opt/microsoft -mindepth 1 -delete
