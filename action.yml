@@ -7,7 +7,7 @@ branding:
 runs:
   using: "composite"
   steps:
-    - name: Show disk space before cleaning
+    - name: Show disk space before clean
       shell: bash
       run: df -h
 
@@ -15,10 +15,16 @@ runs:
       shell: bash
       run: |
         # remove unnecessary software
+        sudo find /usr/lib/google-cloud-sdk -mindepth 1 -delete
         sudo find /usr/local/lib/android -mindepth 1 -delete
         sudo find /usr/share/dotnet -mindepth 1 -delete
-        sudo find /opt/ghc -mindepth 1 -delete
-        sudo find /opt/hostedtoolcache/CodeQL -mindepth 1 -delete
+        sudo find /usr/share/swift -mindepth 1 -delete
+        sudo find /usr/local -mindepth 1 -delete
+        sudo find /opt/az -mindepth 1 -delete
+        sudo find /opt/google -mindepth 1 -delete
+        sudo find /opt/microsoft -mindepth 1 -delete
+        sudo find /opt/pipx -mindepth 1 -delete
+        sudo find /opt/hostedtoolcache -mindepth 1 -delete
 
         # remove docker images
         download_docker_binary() {
@@ -31,6 +37,6 @@ runs:
         download_docker_binary
         sudo docker image prune -af
 
-    - name: Show disk space after cleaning
+    - name: Show disk space after clean
       shell: bash
       run: df -h
