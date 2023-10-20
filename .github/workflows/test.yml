@@ -15,11 +15,9 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
-        with:
-          path: ./src
 
       - name: Test actions
-        uses: ./src
+        uses: ./
 
   test-docker:
     runs-on: ubuntu-22.04
@@ -42,10 +40,8 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
-        with:
-          path: ./src
 
       - name: Test actions
-        uses: ./src
+        uses: ./
         with:
           use-system-docker: false
